@@ -1,7 +1,6 @@
 #include <Stepper.h>
 
-const int stepsPerRevolution = 200;  // change this to fit the number of steps per revolution
-                          // for your motor
+const int stepsPerRevolution = 200;
 
 // initialize the stepper library on the motor shield
 Stepper myStepper(stepsPerRevolution, 12,13);     
@@ -11,8 +10,10 @@ const int pwmA = 3;
 const int pwmB = 11;
 const int brakeA = 9;
 const int brakeB = 8;
-const int dirA = 12;
-const int dirB = 13;
+const int directionA = 12;
+const int directionB = 13;
+
+const int potentiometer = 7;
 
 int x = 0;
 void setup() {
@@ -22,6 +23,9 @@ pinMode(pwmA, OUTPUT);
 pinMode(pwmB, OUTPUT);
 pinMode(brakeA, OUTPUT);
 pinMode(brakeB, OUTPUT);
+
+pinMode(potentiometer, INPUT);
+
 digitalWrite(pwmA, HIGH);
 digitalWrite(pwmB, HIGH);
 digitalWrite(brakeA, LOW);
@@ -29,16 +33,21 @@ digitalWrite(brakeB, LOW);
 
 // initialize the serial port:
 Serial.begin(9600);
-// set the motor speed (for multiple steps only):
-myStepper.setSpeed(2);
+// myStepper.setSpeed(30);
 }
 
 
 void loop() {
+  
+  int potentioValue = analogRead(potentiometer); //potentiometer can read between 0 and 1023
+  int calculatedSpeed = potentioValue/4;         //divided by 4 to limit rpms
+  
+  myStepper.setSpeed(calculatedSpeed);
 
-  myStepper.step(48);
-  myStepper.step(-48);
+  myStepper.step(1); //not sure if I can get away with having no value here. 
 
-  delay(2000);
+//  myStepper.step(200);
+//  myStepper.step(-200);
+//  delay(2000);
 
 }
