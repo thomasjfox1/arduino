@@ -1,3 +1,5 @@
+//This program basically does a yo-yo with the object
+
 #include <Stepper.h>
 
 //ALL UNITS NEED TO BE IN CENTIMETERS
